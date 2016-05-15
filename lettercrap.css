@@ -1,0 +1,8 @@
+[data-letter-crap] {
+	white-space: pre;
+	overflow: hidden;
+	font-size: 10px;
+	line-height: 10px;
+	font-family: monospace;
+	padding: 0;
+}
