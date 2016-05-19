@@ -1,0 +1,71 @@
+html, body {
+	margin: 0;
+	height: 100%;
+	background-color: #FF4F4F;
+	color: white;
+	font-family: sans-serif;
+	/*#FFF270*/
+}
+#main {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	height: 100%;
+	width: 100%;
+}
+#middle {
+	flex-grow: 1;
+}
+#top, #bottom {
+	height: 16vh;
+	width: 100%;
+}
+#top > div:first-child, #bottom > div:first-child {
+	text-align: left;
+}
+#top > div:last-child, #bottom > div:last-child {
+	text-align: right;
+}
+#main > div {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+}
+#middle {
+	
+}
+#bottom > div, #top > div {
+	padding: 10px;
+	width: 32%;
+	box-sizing: border-box;
+}
+#lettercrap {
+	width: 80%;
+	margin: auto;
+	color: white;
+}
+
+a {
+	color: inherit;
+}
+
+#top, #bottom {
+	font-weight: 200;
+	line-height: 1.3;
+}
+
+#github {
+	color: #FF4F4F;
+	text-decoration: none;
+	font-weight: bold;
+	display: inline-block;
+	padding: 11px 15px;
+	background-color: white;
+}
+#byline {
+	transform: translate(-40px) rotate(90deg);
+	transform-origin: 100% 100%;
+}
