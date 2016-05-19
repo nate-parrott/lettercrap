@@ -2,9 +2,9 @@
 
 _Lettercrap_ is a Javascript library that generates dynamic ascii art on the web. It looks like this:
 
-`TODO: insert image`
+![Lettercrap example image](https://raw.githubusercontent.com/nate-parrott/lettercrap/gh-pages/pic.png)
 
-[Here's a live demo](#TODO)
+[Here's a live demo](https://nate-parrott.github.io/lettercrap)
 
 ## Usage
 
