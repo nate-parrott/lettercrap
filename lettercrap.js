@@ -1,9 +1,7 @@
 (function() {
 	var charWidth = 6;
 	var charHeight = 10;
-	var letters = "0101010101010101010101_";
 	var likelihoodOfReplacingWord = 0.05;
-	var words = ["Google", "ISIS", "Netanyahu", "Jihad", "420", "666", "Rumsfeld", "Aquatic"];
 	var likelihoodOfChangingExistingText = 0.1;
 
 	function randomChoice(x) {
@@ -18,10 +16,8 @@
 		img.src = element.getAttribute('data-letter-crap');
 	}
 	
-	function getTextContentWithImageAtSize(image, width, height, existingText) {
+	function getTextContentWithImageAtSize(image, width, height, existingText, words, letters) {
 		existingText = existingText ? existingText.replace(/\r?\n|\r/g, '') : null;
-		if (existingText)
-			console.log(existingText.length == width*height)
 		var shouldReplaceExisting = function() { return !existingText || Math.random() < likelihoodOfChangingExistingText };
 		
 		var canvas = document.createElement('canvas');
@@ -45,7 +41,7 @@
 						chars += existingText[i];
 					}
 					
-					if (Math.random() < likelihoodOfReplacingWord && shouldReplaceExisting()) {
+					if (words.length > 0 && Math.random() < likelihoodOfReplacingWord && shouldReplaceExisting()) {
 						var word = randomChoice(words);
 						if (i + 1 - startOfFilledInSequence >= word.length) {
 							chars = chars.substring(0, chars.length - word.length) + word;
@@ -64,11 +60,17 @@
 	}
 	
 	function render(element, image, prev) {
+		if (element.hasAttribute('data-lettercrap-aspect-ratio')) {
+			var aspect = parseFloat(element.getAttribute('data-lettercrap-aspect-ratio'));
+			element.style.height = element.clientWidth * aspect + 'px';
+		}
 		var text;
+		var words = element.hasAttribute('data-lettercrap-words') ? element.getAttribute('data-lettercrap-words').split(' ') : [];
+		var letters = element.hasAttribute('data-lettercrap-letters') ? element.getAttribute('data-lettercrap-letters') : '0101010101_';
 		if (prev && prev.width == element.clientWidth && prev.height == element.clientHeight) {
-			text = getTextContentWithImageAtSize(image, element.clientWidth, element.clientHeight, prev.text);
+			text = getTextContentWithImageAtSize(image, element.clientWidth, element.clientHeight, prev.text, words, letters);
 		} else {
-			text = getTextContentWithImageAtSize(image, element.clientWidth, element.clientHeight, null);
+			text = getTextContentWithImageAtSize(image, element.clientWidth, element.clientHeight, null, words, letters);
 		}
 		element.textContent = text;
 		var data = {width: element.clientWidth, height: element.clientHeight, text: text};
