@@ -1,6 +1,6 @@
 # Lettercrap
 
-_Lettercrap_ is a Javascript library that generates dynamic ascii art on the web. It looks like this:
+_Lettercrap_ is a Javascript library that generates dynamic ascii art on the web, using an image mask. It looks like this:
 
 <img src="https://raw.githubusercontent.com/nate-parrott/lettercrap/gh-pages/crap.gif" width="400px">
 
