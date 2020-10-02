@@ -5,6 +5,26 @@
   const likelihoodOfChangingExistingText = 0.1;
   const randomChoice = x => x[Math.floor(Math.random() * x.length)];
 
+  function createImageURL(text) {
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
+    let fontsize = measureTextBinaryMethod(text, 'monospace', 0, 600, canvas.width);
+    context.fillText(text, 0, fontsize);
+    return canvas.toDataURL();
+
+    // https://jsfiddle.net/be6ppdre/29/
+    function measureTextBinaryMethod(text, fontface, min, max, desiredWidth) {
+      if (max - min < 1) return min;
+      let test = min + ((max - min) / 2); // Find half interval
+      context.font = `bold ${test}px ${fontface}`;
+      measureTest = context.measureText(text).width;
+
+      const condition = measureTest > desiredWidth;
+      return measureTextBinaryMethod(text, fontface, condition ? min : test, 
+        condition ? test : max, desiredWidth);
+    }
+  }
+
   function initElement(element) {
     let img = new Image();
     img.onload = () => render(element, img, null);
@@ -28,15 +48,10 @@
     for (let y = 0; y < data.height; y++) {
     	for (let x = 0; x < data.width; x++) {
         let black = data.data[i*4] < 120;
-        let transparent = data.data[i*4+3] < 50; 
+        let transparent = data.data[i*4+3] < 50;
         if (black && !transparent) {
           if (startOfFilledInSequence === null) startOfFilledInSequence = i;
-
-          if (shouldReplaceExisting()) {
-            chars += randomChoice(letters);
-          } else {
-            chars += existingText[i];
-          }
+          chars += shouldReplaceExisting() ? randomChoice(letters) : existingText[i];
 
           if (words.length > 0 && Math.random() < likelihoodOfReplacingWord && shouldReplaceExisting()) {
             let word = randomChoice(words);
@@ -74,6 +89,13 @@
 	}
 
   document.addEventListener('DOMContentLoaded', function() {
+    let textElements = document.querySelectorAll('[data-letter-crap-text]');
+    for (let i = 0; i < textElements.length; i++) {
+      // TODO: Add bold, font, and line wrap length as parameters
+      let imageURL = createImageURL(textElements[i].getAttribute('data-letter-crap-text'));
+      textElements[i].setAttribute('data-letter-crap', imageURL);
+    }
+
     let elements = document.querySelectorAll('[data-letter-crap]');
     for (let i = 0; i < elements.length; i++) initElement(elements[i]);
   })
