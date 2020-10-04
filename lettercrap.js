@@ -19,7 +19,7 @@
     function measureTextBinaryMethod(text, fontface, min, max, desiredWidth) {
       if (max - min < 1) return min;
       let test = min + ((max - min) / 2); // Find half interval
-      context.font = `bold ${test}px ${fontface}`;
+      context.font = `${test}px ${fontface}`;
       measureTest = context.measureText(text).width;
 
       const condition = measureTest > desiredWidth;
@@ -94,8 +94,8 @@
   document.addEventListener('DOMContentLoaded', function() {
     let textElements = document.querySelectorAll('[data-lettercrap-text]');
     for (let i = 0; i < textElements.length; i++) {
-      // TODO: Add bold, font, and line wrap length as parameters
-      let imageURL = createImageURL(textElements[i].getAttribute('data-lettercrap-text'));
+      let text = textElements[i].getAttribute('data-lettercrap-text');
+      let imageURL = createImageURL(text);
       textElements[i].setAttribute('data-letter-crap', imageURL);
     }
 
