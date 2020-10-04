@@ -20,7 +20,7 @@
       if (max - min < 1) return min;
       let test = min + ((max - min) / 2); // Find half interval
       context.font = `${test}px ${fontface}`;
-      measureTest = context.measureText(text).width;
+      let measureTest = context.measureText(text).width;
 
       const condition = measureTest > desiredWidth;
       return measureTextBinaryMethod(text, fontface, condition ? min : test, 
@@ -82,7 +82,7 @@
 
     let words = element.hasAttribute('data-lettercrap-words') ? element.getAttribute('data-lettercrap-words').split(' ') : [];
     let letters = element.hasAttribute('data-lettercrap-letters') ? element.getAttribute('data-lettercrap-letters') : '0101010101_';
-    let textCondition = prev && prev.width == element.clientWidth && prev.height == element.clientHeight;
+    let textCondition = prev && prev.width === element.clientWidth && prev.height === element.clientHeight;
     let text = getTextContentWithImageAtSize(image, element.clientWidth, element.clientHeight, 
       textCondition ? prev.text : null, words, letters);
 
