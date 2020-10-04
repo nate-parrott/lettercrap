@@ -1,6 +1,7 @@
 (function() {
   const charWidth = 6;
   const charHeight = 10;
+  const updateInterval = 150;
   const likelihoodOfReplacingWord = 0.05;
   const likelihoodOfChangingExistingText = 0.1;
   const randomChoice = x => x[Math.floor(Math.random() * x.length)];
@@ -8,8 +9,10 @@
   function createImageURL(text) {
     let canvas = document.createElement('canvas');
     let context = canvas.getContext('2d');
-    let fontsize = measureTextBinaryMethod(text, 'monospace', 0, 600, canvas.width);
-    context.fillText(text, 0, fontsize);
+    let fontsize = measureTextBinaryMethod(text, 'monospace', 0, 10, canvas.width);
+    canvas.height = fontsize + 1;
+    canvas.width = context.measureText(text).width + 2;
+    context.fillText(text, 1, fontsize);
     return canvas.toDataURL();
 
     // https://jsfiddle.net/be6ppdre/29/
@@ -29,7 +32,7 @@
     let img = new Image();
     img.onload = () => render(element, img, null);
     img.src = element.getAttribute('data-letter-crap');
-    img.crossOrigin = "anonymous";
+    img.crossOrigin = 'anonymous';
   }
 
   function getTextContentWithImageAtSize(image, width, height, existingText, words, letters) {
@@ -68,7 +71,7 @@
       chars += "\n";
       startOfFilledInSequence = null;
     }
-    return chars
+    return chars;
 	}
 	
 	function render(element, image, prev) {
@@ -85,14 +88,14 @@
 
     element.textContent = text;
     let data = {width: element.clientWidth, height: element.clientHeight, text: text};
-    setTimeout(() => render(element, image, data), 150);
+    setTimeout(() => render(element, image, data), updateInterval);
 	}
 
   document.addEventListener('DOMContentLoaded', function() {
-    let textElements = document.querySelectorAll('[data-letter-crap-text]');
+    let textElements = document.querySelectorAll('[data-lettercrap-text]');
     for (let i = 0; i < textElements.length; i++) {
       // TODO: Add bold, font, and line wrap length as parameters
-      let imageURL = createImageURL(textElements[i].getAttribute('data-letter-crap-text'));
+      let imageURL = createImageURL(textElements[i].getAttribute('data-lettercrap-text'));
       textElements[i].setAttribute('data-letter-crap', imageURL);
     }
 
