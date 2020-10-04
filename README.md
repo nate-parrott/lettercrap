@@ -28,6 +28,11 @@ the `data-lettercrap-words` attribute:
 
 	<div data-letter-crap='words.png' data-lettercrap-words='apple banana peach'></div>
 
+_Lettercrap_ allows you to generate a canvas from text if you don't want to generate an image beforehand
+with the `data-lettercrap-text` attribute:
+
+	<div data-lettercrap-text='CHECK IT OUT' data-lettercrap-aspect-ratio='0.3'></div>
+
 Check out the `examples/index.html` file to see exactly how this all fits together.
 
 ## Development
